@@ -85,6 +85,30 @@ function processACSPhotos(model, method, options) {
 	}
 }
 
+function processACSUsers(model, method, options) {
+	switch (method) {
+		case "update":
+			var params = model.toJSON();
+			//uses ACS to update the user data
+			Cloud.Users.update(params, function(e) 
+				{
+					if (e.success) {
+						//the model in this case is a user
+						model.meta = e.meta;
+						//the first element of the users array contains the current user
+						options.success && options.success(e.users[0]);
+						model.trigger("fetch");
+					} else {
+						//no bueno
+						Ti.API.error("Cloud.Users.update " + e.message);
+						options.error && options.error(e.error && e.message || e);
+					}
+				}
+			);
+      		break;
+	}
+}
+
 
 /**
  * Process ACS Comments (reviews) - map to the REST function calls (CRUD)
@@ -150,8 +174,6 @@ function processACSComments(model, method, opts) {
 	}
 }
 
-
-
 var _ = require("alloy/underscore")._;
 
 module.exports.sync = Sync;
@@ -167,4 +189,4 @@ module.exports.afterModelCreate = function(Model) {
 	Model = Model || {};
 	Model.prototype.config.Model = Model;
 	return Model;
-}; 
+};
