@@ -10,7 +10,7 @@
     <version>1.0</version>
     <publisher>Nhat</publisher>
     <url>http://</url>
-    <description/>
+    <description>undefined</description>
     <copyright>2015 by Nhat</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
@@ -54,11 +54,10 @@
     </mobileweb>
     <modules>
         <module platform="commonjs">ti.cloud</module>
-	
-	    <!-- Added to utilize the facebook module
+        <!-- Added to utilize the facebook module
 	         For the Titanium SDK versions 3.1 and higher -->
-	    <module platform="android">facebook</module>
-	    <module platform="iphone">facebook</module>
+        <module platform="android">facebook</module>
+        <module platform="iphone">facebook</module>
     </modules>
     <deployment-targets>
         <target device="iphone">false</target>
