@@ -1,4 +1,4 @@
-/* Testing
+/*
  * on the open event of the tabGroup, setup the menu and add an
  * event listener that will reset the menus when the active tab
  * changes.

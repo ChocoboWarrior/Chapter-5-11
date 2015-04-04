@@ -236,6 +236,98 @@ exports.definition = {
           			}
           		);
       		},
+      		
+      		getFollowers : function(_callback, _followers) {
+				var followers = Alloy.createCollection("Friend");
+				followers.fetch(
+					{
+						data : {
+            				per_page : 100,
+            				q : " ",
+            				user_id : this.id,
+            				followers : _followers || "true"
+          				},
+          				success : function(_collection, _response) {
+            				_callback && _callback(
+            					{
+              						success : true,
+              						collection : _collection
+            					}
+            				);
+          				},
+          				error : function(_model, _response) {
+            				_callback && _callback(
+            					{
+              						success : false,
+              						collection : {},
+              						error : _response
+              					}
+              				);
+          				}
+        			}
+        		);
+
+      		},
+      		
+      		getFriends : function(_callback) {
+        		this.getFollowers(_callback, false);
+      		},
+      		
+	      	followUser : function(_userid, _callback) {
+	        	var friendItem = {
+	          		"user_ids" : _userid,
+	          		"approval_required" : "false"
+	        	};
+	        	
+	        	var friendItemModel = Alloy.createModel('Friend');
+	        	
+	        	friendItemModel.save(friendItem, 
+        			{
+        				success : function(_model, _response) {
+            				_callback(
+            					{
+              						success : true
+            					}
+            				);
+          				},
+          				error : function(_model, _response) {
+            				_callback(
+            					{
+              						success : false
+            					}
+            				);
+          				}
+        			}
+        		);
+	        },
+
+      		unFollowUser : function(_userid, _callback) {
+      			var friendItemModel = Alloy.createModel('Friend');
+      			
+      			friendItemModel.id = _userid;
+      			
+      			friendItemModel.destroy(
+      				{
+          				data : {
+            				"user_ids" : [_userid]
+          				},
+          				success : function(_model, _response) {
+            				_callback(
+            					{
+              						success : true
+            					}
+            				);
+          				},
+          				error : function(_model, _response) {
+            				_callback(
+								{
+									success : false
+								}
+							);
+          				}
+        			}
+        		);
+      		},
       					
 		});
 	

@@ -12,3 +12,5 @@
 
 // Using FB module in the latest release of Appcelerator
 Alloy.Globals.FB = require('facebook');
+
+Alloy.Globals.PW = require('progressWindow');
