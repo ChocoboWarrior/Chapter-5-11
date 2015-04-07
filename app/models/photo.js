@@ -44,13 +44,7 @@ exports.definition = {
 					}
 				});
 			},
-			/**
-			 * This is getting a bit ahead, but finds photos near current location
-			 * @param {Object} _user
-			 * @param {Object} _location
-			 * @param {Object} _distance
-			 * @param {Object} _options
-			 */
+
 			findPhotosNearMe : function(_user, _location, _distance, _options) {
 				var collection = this;
 
@@ -63,9 +57,7 @@ exports.definition = {
 				}
 				// get all of the current users friends
 				_user.getFriends(function(_resp) {
-					if (_resp.success) { 
-						
-						//debugger;
+					if (_resp.success) { //debugger;
 
 						var idList = _.pluck(_resp.collection.models, "id");
 						idList.push(_user.id);

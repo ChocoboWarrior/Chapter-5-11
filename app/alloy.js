@@ -14,3 +14,5 @@
 Alloy.Globals.FB = require('facebook');
 
 Alloy.Globals.PW = require('progressWindow');
+
+Alloy.Globals.Map = require('ti.map');
