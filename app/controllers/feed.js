@@ -3,6 +3,9 @@ var args = arguments[0] || {};
 // load Geolocation library
 var geo = require("geo");
 
+// load sharing library
+var sharing = require("sharing");
+
 //this captures the event
 OS_IOS && $.cameraButton.addEventListener("click", function(_event) {
 	$.cameraButtonClicked(_event);
@@ -214,6 +217,21 @@ function processTableClicks(_event) {
 	}
 }
 
+function handleShareButtonClicked(_event) {
+	var collection, model;
+	
+	if(!_event.row) {
+		model = _event.data;
+	} else {
+		collection = Alloy.Collections.instance("Photo");
+		model = collection.get(_event.row.row_id);
+	}
+	
+	// commonjs library for sharing
+	sharing.sharingOptions({
+		model : model
+	});
+}
 
 /**
  * work on handling comments through the comment model

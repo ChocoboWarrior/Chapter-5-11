@@ -5,8 +5,7 @@ var androidContainer = null;
 
 exports.showIndicator = function(_messageString, _progressBar) {
 	
-	Ti.API.info('showIndicator: ' + _messageString);
-
+	// if Android, we need a container for the progress bar to make it more visible
 	if (OS_ANDROID) {
 		
 		androidContainer = Ti.UI.createView({
@@ -31,8 +30,9 @@ exports.showIndicator = function(_messageString, _progressBar) {
 	});
 
 	if (_progressBar === true) {
+		// adjust spacing, size and color based on platform
 		activityIndicator = Ti.UI.createProgressBar({
-			style : OS_IOS ? Titanium.UI.iPhone.ProgressBarStyle.DARK : Ti.UI.ActivityIndicatorStyle.DARK, 
+			style : OS_IOS && Titanium.UI.iPhone.ProgressBarStyle.PLAIN, 
 			top : ( OS_IOS ? "200dp" : '10dp'),
 			bottom : ( OS_ANDROID ? '10dp' : undefined),
 			left : "30dp",
@@ -66,6 +66,7 @@ exports.showIndicator = function(_messageString, _progressBar) {
 		});
 	}
 
+	// if Android, you need to account for a container when setting up the window for display
 	if (OS_ANDROID) {
 		androidContainer.add(activityIndicator);
 		activityIndicatorWindow.add(androidContainer);
@@ -96,12 +97,13 @@ exports.hideIndicator = function() {
 		progressTimeout = null;
 	}
 
-	Ti.API.info("hideIndicator");
 	if (!showingIndicator) {
 		return;
 	}
+	
 	activityIndicator.hide();
 
+	// if android, you need to account for a container when cleaning up the window
 	if (OS_ANDROID) {
 		androidContainer.remove(activityIndicator);
 		activityIndicatorWindow.remove(androidContainer);
